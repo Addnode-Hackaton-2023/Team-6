@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/sustainabytes/.vs/SustainaBytes/DesignTimeBuild/.dtbcache.v2
+/sustainabytes/.vs/SustainaBytes/FileContentIndex/0f0e625a-ccc2-49ed-a814-31e55fe8a22a.vsidx
+/sustainabytes/.vs/SustainaBytes
+/sustainabytes/WebAPI/obj

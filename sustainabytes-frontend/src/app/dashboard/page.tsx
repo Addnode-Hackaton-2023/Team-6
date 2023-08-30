@@ -1,15 +1,6 @@
-'use client'
-
-import { DateRangePickerValue } from '@tremor/react'
-import { useState } from 'react'
 import Dashboard, { ChartData, TableData } from './Dashboard'
 
 export default function DashboardExample() {
-  const [value, setValue] = useState<DateRangePickerValue>({
-    from: new Date(2023, 1, 1),
-    to: new Date(),
-  })
-
   const tableData: TableData[] = [
     {
       mottagare: 'En kyrka',
@@ -182,12 +173,7 @@ export default function DashboardExample() {
 
   return (
     <main className="p-12">
-      <Dashboard
-        value={value}
-        setValue={setValue}
-        chartData={chartData}
-        tableData={tableData}
-      />
+      <Dashboard chartData={chartData} tableData={tableData} />
     </main>
   )
 }

@@ -1,4 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import {
   Flex,
   DateRangePicker,
@@ -38,12 +40,15 @@ export interface ChartData {
 }
 
 interface Props {
-  value: DateRangePickerValue
-  setValue: Dispatch<SetStateAction<DateRangePickerValue>>
   chartData: ChartData[]
   tableData: TableData[]
 }
-const Dashboard = ({ value, setValue, chartData, tableData }: Props) => {
+const Dashboard = ({ chartData, tableData }: Props) => {
+  const [value, setValue] = useState<DateRangePickerValue>({
+    from: new Date(2023, 1, 1),
+    to: new Date(),
+  })
+
   return (
     <>
       <Flex justifyContent="between">
@@ -106,8 +111,8 @@ const Dashboard = ({ value, setValue, chartData, tableData }: Props) => {
                 <LineChart
                   className="mt-6 h-96"
                   data={chartData}
-                  index="Datum"
-                  categories={['Vikt']}
+                  index="datum"
+                  categories={['vikt']}
                   colors={['emerald']}
                   yAxisWidth={40}
                 />

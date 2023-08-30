@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 
-namespace WebAPI.DataStore;
+namespace WebAPI;
 
 public partial class SustainaBytesDb : DbContext
 {
@@ -88,18 +90,20 @@ public partial class SustainaBytesDb : DbContext
 
         modelBuilder.Entity<Pickup>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Pickup", "dbo");
+            entity.HasKey(e => new { e.DriveId, e.GiverId });
+
+            entity.ToTable("Pickup", "dbo");
 
             entity.Property(e => e.PickupTime).HasColumnType("datetime");
 
-            entity.HasOne(d => d.Drive).WithMany()
+            entity.HasOne(d => d.Drive).WithMany(p => p.Pickups)
                 .HasForeignKey(d => d.DriveId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Pickup_Drive");
 
-            entity.HasOne(d => d.Giver).WithMany()
+            entity.HasOne(d => d.Giver).WithMany(p => p.Pickups)
                 .HasForeignKey(d => d.GiverId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Pickup_Giver");
         });
 

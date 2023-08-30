@@ -18,4 +18,6 @@ public partial class Giver
     public virtual City? City { get; set; }
 
     public virtual Company? Company { get; set; }
+
+    public virtual ICollection<Pickup> Pickups { get; set; } = new List<Pickup>();
 }

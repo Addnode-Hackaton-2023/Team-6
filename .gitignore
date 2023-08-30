@@ -2,4 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/sustainabytes
+
+/.vs/Team-6
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/sustainabytes/WebAPI/bin
+/sustainabytes/WebAPI/obj/Debug/net7.0
+/sustainabytes/WebAPI/obj
+/sustainabytes/.vs/SustainaBytes

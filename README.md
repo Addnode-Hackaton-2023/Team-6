@@ -22,7 +22,7 @@ Här skall sista commiten till repot vara gjord och den muntliga presentationen 
 * Välj en teamleader för erat team.
   - Teamleader - Rickard Sandström
 * Välj ett namn för erat team. Detta skall även skrivas på dörren.
-  - Namn - Sustainabytes
+  - Namn - SustainaBytes
  
 Ett tips till teamet är att gå varvet runt och låta alla presentera sig, ni kan utgå från detta ifall ni vill:
 * Vem är du?

@@ -29,9 +29,8 @@ import { LocalShipping } from '@mui/icons-material'
 import { useState } from 'react'
 import { TableHead } from '@mui/material'
 import { data } from 'autoprefixer'
-import Image from 'next/image'
 
-export default function DashboardExample() {
+export default function LeveransExample() {
   const data = [
     {
       mottagare: 'En kyrka',
@@ -210,9 +209,7 @@ export default function DashboardExample() {
   return (
     <main className="p-12">
       <Flex justifyContent="between">
-        <div className="w-20 h-20 relative-ö">
-          <Image src="/Allwin_Logo_round_03.png" alt="logo" fill />
-        </div>
+        <Title>Dashboard</Title>
         <DateRangePicker
           value={value}
           onValueChange={setValue}

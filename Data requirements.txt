@@ -1,0 +1,13 @@
+Ruttinfo:
+Starttid/information om att en ny körning har startats.
+Vilken mottagare.
+Antal upphämtningsplatser.
+Avvikelser kopplad till körning.
+Uppskattad tid hos mottagare vid start.
+Ny uppskattad tid hos mottagare efter varje upphämtning.
+Tid vid avslutad leverans.
+
+Upphämtningsinfo:
+Upphämtningsplats/givare.
+Vikt per upphämtningsplats/givare.
+Klockslag vid upphämtning.

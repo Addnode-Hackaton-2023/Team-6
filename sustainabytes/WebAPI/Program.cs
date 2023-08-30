@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WebAPI;
 using WebAPI.DataStore;
 
 var builder = WebApplication.CreateBuilder(args);

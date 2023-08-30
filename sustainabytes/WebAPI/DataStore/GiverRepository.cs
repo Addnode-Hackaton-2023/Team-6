@@ -14,7 +14,7 @@ namespace WebAPI.DataStore
 
         public IEnumerable<Giver> GetGivers()
         {
-            return _dbContext.Giver
+            return _dbContext.Givers
                 .AsNoTracking()
                 .ToList();
         }

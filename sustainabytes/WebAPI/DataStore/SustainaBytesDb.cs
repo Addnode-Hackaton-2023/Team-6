@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 
-namespace WebAPI;
+namespace WebAPI.DataStore;
 
 public partial class SustainaBytesDb : DbContext
 {

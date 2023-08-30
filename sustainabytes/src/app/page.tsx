@@ -1,30 +1,11 @@
 'use client'
 
-import {
-  Card,
-  Grid,
-  Title,
-  Text,
-  Tab,
-  TabList,
-  TabGroup,
-  TabPanel,
-  TabPanels,
-  BadgeDelta,
-  Flex,
-  Metric,
-  ProgressBar,
-  Badge,
-} from '@tremor/react'
-
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import { LocalShipping } from '@mui/icons-material'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function MainExample() {
   return (
-    <div className="bg-slate-300 min-h-[70vh] flex justify-center items-center">
+    <div className="bg-slate-100 min-h-[70vh] flex justify-center items-center">
       <div className="mx-auto max-w-2xl">
         <div className="w-20 h-20 relative mx-auto">
           <Image src="/Allwin_Logo_round_03.png" alt="logo" fill />

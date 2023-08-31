@@ -27,23 +27,17 @@ import {
 import Image from 'next/image'
 import { sv } from 'date-fns/locale'
 
-export interface TableData {
+export interface DriveData {
   mottagare: string
   datum: string
   vikt: string
   status: string
 }
 
-export interface ChartData {
-  datum: string
-  vikt: number
-}
-
 interface Props {
-  chartData: ChartData[]
-  tableData: TableData[]
+  apiEndpoint: string
 }
-const Dashboard = ({ chartData, tableData }: Props) => {
+const Dashboard = ({ apiEndpoint }: Props) => {
   const oneWeekAgo = new Date()
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
 
@@ -53,26 +47,49 @@ const Dashboard = ({ chartData, tableData }: Props) => {
       to: new Date(),
     })
 
-  const timeFrameCallback = async (timeframe: DateRangePickerValue) => {
-    console.log(timeframe)
-    fetch(
-      'https://hackaddthon2023-webapi.azurewebsites.net/api/givers/getgiversbycompany/?companyid=1',
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response)
-      })
-  }
+  const [driveData, setDriveData] = useState<DriveData[]>([])
 
   useEffect(() => {
+    const timeFrameCallback = async (timeframe: DateRangePickerValue) => {
+      const fromDate =
+        selectedTimeFrame.from && new Date(selectedTimeFrame.from).toISOString()
+      const toDate =
+        selectedTimeFrame.to && new Date(selectedTimeFrame.to).toISOString()
+
+      console.log(fromDate, toDate)
+      fetch(
+        `https://hackaddthon2023-webapi.azurewebsites.net/api/${apiEndpoint}fromDate=${fromDate}&toDate=${toDate}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((response) => {
+          const results = response.map((result: any) => {
+            const weight = result.pickups.reduce(function (a: any, b: any) {
+              return a + b.weight
+            }, 0)
+            return {
+              mottagare: 'test',
+              datum: result.startTime,
+              vikt: weight,
+              status: result.endTime ? 'levererad' : 'pågående',
+            }
+          })
+
+          setDriveData(results)
+        })
+    }
+
     timeFrameCallback(selectedTimeFrame)
-  }, [selectedTimeFrame])
+  }, [apiEndpoint, selectedTimeFrame])
+
+  const totalPeriodWeight = driveData.reduce(function (a: any, b: any) {
+    return a + b.vikt
+  }, 0)
 
   return (
     <>
@@ -101,7 +118,7 @@ const Dashboard = ({ chartData, tableData }: Props) => {
                 <Flex alignItems="start">
                   <div>
                     <Text>Total vikt</Text>
-                    <Metric>200000kg</Metric>
+                    <Metric>{totalPeriodWeight} kg</Metric>
                   </div>
                 </Flex>
               </Card>
@@ -109,7 +126,7 @@ const Dashboard = ({ chartData, tableData }: Props) => {
                 <Flex alignItems="start">
                   <div>
                     <Text>Total antal matkassar</Text>
-                    <Metric>5400000</Metric>
+                    <Metric>{totalPeriodWeight / 5} st</Metric>
                   </div>
                 </Flex>
               </Card>
@@ -117,7 +134,9 @@ const Dashboard = ({ chartData, tableData }: Props) => {
                 <Flex alignItems="start">
                   <div>
                     <Text>Totalt utsläpp (CO2)</Text>
-                    <Metric>???</Metric>
+                    <Metric>
+                      {totalPeriodWeight * 2} CO<sub>2</sub>
+                    </Metric>
                   </div>
                 </Flex>
               </Card>
@@ -125,7 +144,7 @@ const Dashboard = ({ chartData, tableData }: Props) => {
                 <Flex alignItems="start">
                   <div>
                     <Text>Totalt antal körningar</Text>
-                    <Metric>400000000000000</Metric>
+                    <Metric>{driveData.length} st</Metric>
                   </div>
                 </Flex>
               </Card>
@@ -135,7 +154,7 @@ const Dashboard = ({ chartData, tableData }: Props) => {
                 <Title>Vikt över tid</Title>
                 <LineChart
                   className="mt-6 h-96"
-                  data={chartData}
+                  data={driveData}
                   index="datum"
                   categories={['vikt']}
                   colors={['emerald']}
@@ -166,11 +185,11 @@ const Dashboard = ({ chartData, tableData }: Props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {tableData.map((item, index) => (
+                    {driveData.map((item, index) => (
                       <TableRow key={index}>
                         <TableCell>{item.mottagare}</TableCell>
                         <TableCell>{item.datum}</TableCell>
-                        <TableCell>{item.vikt}</TableCell>
+                        <TableCell>{item.vikt}kg</TableCell>
                         <TableCell className="max-w-fit">
                           <Badge color="emerald">{item.status}</Badge>
                         </TableCell>

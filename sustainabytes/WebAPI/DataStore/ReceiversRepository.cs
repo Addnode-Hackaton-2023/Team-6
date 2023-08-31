@@ -18,5 +18,10 @@ namespace WebAPI.DataStore
                 .AsNoTracking()
                 .ToList();
         }
+
+        public Receiver? GetReceiver(int id)
+        {
+            return _dbContext.Receivers.FirstOrDefault(p => p.Id == id);
+        }
     }
 }

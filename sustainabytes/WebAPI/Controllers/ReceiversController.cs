@@ -24,5 +24,11 @@ namespace WebAPI.Controllers
         {
             return _receiverRepository.GetAllReceivers();
         }
+
+        [HttpGet(Name = "GetReceiver")]
+        public Receiver? GetReceiver(int id)
+        {
+            return _receiverRepository.GetReceiver(id);
+        }
     }
 }

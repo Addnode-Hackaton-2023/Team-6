@@ -1,3 +1,4 @@
+import { DateRangePickerValue } from '@tremor/react'
 import Dashboard, { ChartData, TableData } from './Dashboard'
 
 export default function DashboardExample() {

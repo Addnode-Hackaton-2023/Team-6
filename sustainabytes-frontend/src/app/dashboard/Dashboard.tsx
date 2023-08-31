@@ -217,7 +217,13 @@ const Dashboard = ({ apiEndpoint }: Props) => {
                         <TableCell>{item.datum}</TableCell>
                         <TableCell>{item.vikt}kg</TableCell>
                         <TableCell className="max-w-fit">
-                          <Badge color="emerald">{item.status}</Badge>
+                          <Badge
+                            color={
+                              item.status === 'levererad' ? 'blue' : 'green'
+                            }
+                          >
+                            {item.status}
+                          </Badge>
                         </TableCell>
                       </TableRow>
                     ))}

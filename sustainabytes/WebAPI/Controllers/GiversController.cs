@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
 using WebAPI.DataStore;
 using WebAPI.Models;
 
@@ -30,5 +31,12 @@ namespace WebAPI.Controllers
         {
             return _giverRepository.GetGiversByCompany(companyId);
         }
+
+        [HttpGet(Name = "GetGiverById")]
+        public Giver? GetGiverById(int giverId)
+        {
+            return _giverRepository.GetGiverById(giverId);
+        }
+
     }
 }

@@ -16,9 +16,8 @@ namespace WebAPI.DataStore
         public IEnumerable<Drive> GetDrivesByGiver(int giverId, DateTime fromDate, DateTime toDate)
         {
             return _dbContext.Drives
-                .Include(x => x.Pickups)
-                    .ThenInclude(x => x.Giver)
-                .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate && x.Pickups.Any(p => p.GiverId == giverId))
+                .Include(x => x.Pickups.Where(p => p.GiverId == giverId))
+                .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate)
                 .OrderBy(x => x.StartTime)
                 .AsNoTracking()
                 .ToList();

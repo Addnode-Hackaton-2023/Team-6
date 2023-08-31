@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models;
 
@@ -19,5 +20,6 @@ public partial class Drive
 
     public virtual ICollection<Pickup> Pickups { get; set; } = new List<Pickup>();
 
+    [JsonIgnore]
     public virtual Receiver Receiver { get; set; } = null!;
 }

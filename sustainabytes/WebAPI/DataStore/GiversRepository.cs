@@ -26,6 +26,15 @@ namespace WebAPI.DataStore
                 .AsNoTracking()
                 .ToList();
         }
-        
+
+        public Giver? GetGiverById(int giverId)
+        {
+            return _dbContext.Givers
+                .Where(x => x.Id == giverId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+        }
+
     }
 }

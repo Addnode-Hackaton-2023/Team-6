@@ -19,10 +19,10 @@ namespace WebAPI.Controllers
             _statisticsRepository = statisticsRepository;
         }
 
-        [HttpGet(Name = "GetTotalWeight")]
-        public Statistics GetTotalWeight()
+        [HttpGet(Name = "GetTotalStatistics")]
+        public Statistics GetTotalStatistics()
         {
-            return _statisticsRepository.GetTotalWeight();
+            return _statisticsRepository.GetTotalStatistics();
         }
     }
 }

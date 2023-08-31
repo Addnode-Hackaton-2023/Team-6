@@ -22,7 +22,7 @@ namespace WebAPI.DataStore
             _dbContext = dbContext;
         }
 
-        public Statistics GetTotalWeight()
+        public Statistics GetTotalStatistics()
         {
             double weight = _dbContext.Pickups.Sum(p => p.Weight);
             return new Statistics()

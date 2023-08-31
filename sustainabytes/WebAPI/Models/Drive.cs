@@ -16,6 +16,8 @@ public partial class Drive
 
     public int ReceiverId { get; set; }
 
+    public int TotalNumberOfPickups { get; set; }
+
     public virtual ICollection<Deviation> Deviations { get; set; } = new List<Deviation>();
 
     public virtual ICollection<Pickup> Pickups { get; set; } = new List<Pickup>();

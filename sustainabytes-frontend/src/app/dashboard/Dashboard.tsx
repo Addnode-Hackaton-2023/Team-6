@@ -32,6 +32,7 @@ export interface DriveData {
   datum: string
   vikt: string
   status: string
+  driveId: string
 }
 
 interface Props {
@@ -98,6 +99,7 @@ const Dashboard = ({ apiEndpoint }: Props) => {
               datum: result.startTime,
               vikt: weight,
               status: result.endTime ? 'levererad' : 'pågående',
+              driveId: result.id,
             }
           })
           Promise.all(results).then((promise) => {
@@ -212,7 +214,13 @@ const Dashboard = ({ apiEndpoint }: Props) => {
                   </TableHead>
                   <TableBody>
                     {driveDataReversed.map((item, index) => (
-                      <TableRow key={index}>
+                      <TableRow
+                        key={index}
+                        onClick={() =>
+                          (window.location.href = `/leverans/${item.driveId}`)
+                        }
+                        className="hover:cursor-pointer"
+                      >
                         <TableCell>{item.mottagare}</TableCell>
                         <TableCell>{item.datum}</TableCell>
                         <TableCell>{item.vikt}kg</TableCell>

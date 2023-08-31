@@ -32,11 +32,19 @@ export interface DriveData {
   datum: string
   vikt: string
   status: string
+  driveId: string
 }
 
 interface Props {
   apiEndpoint: string
 }
+
+const Loading = () => (
+  <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 flex flex-col items-center justify-center">
+    <h2 className="text-center text-white text-xl font-semibold">Laddar...</h2>
+  </div>
+)
+
 const Dashboard = ({ apiEndpoint }: Props) => {
   const oneWeekAgo = new Date()
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
@@ -46,17 +54,21 @@ const Dashboard = ({ apiEndpoint }: Props) => {
       from: oneWeekAgo,
       to: new Date(),
     })
-
+  const [loading, setLoading] = useState(true)
   const [driveData, setDriveData] = useState<DriveData[]>([])
+
+  const driveDataReversed = [...driveData].reverse()
 
   useEffect(() => {
     const timeFrameCallback = async (timeframe: DateRangePickerValue) => {
+      setLoading(true)
       const fromDate =
-        selectedTimeFrame.from && new Date(selectedTimeFrame.from).toISOString()
+        selectedTimeFrame.from &&
+        new Date(selectedTimeFrame.from).toLocaleDateString()
       const toDate =
-        selectedTimeFrame.to && new Date(selectedTimeFrame.to).toISOString()
+        selectedTimeFrame.to &&
+        new Date(selectedTimeFrame.to).toLocaleDateString()
 
-      console.log(fromDate, toDate)
       fetch(
         `https://hackaddthon2023-webapi.azurewebsites.net/api/${apiEndpoint}fromDate=${fromDate}&toDate=${toDate}`,
         {
@@ -67,32 +79,48 @@ const Dashboard = ({ apiEndpoint }: Props) => {
         }
       )
         .then((res) => res.json())
-        .then((response) => {
-          const results = response.map((result: any) => {
+        .then(async (response) => {
+          const results = response.map(async (result: any) => {
+            const receiver = await fetch(
+              `https://hackaddthon2023-webapi.azurewebsites.net/api/receivers/getreceiver/?id=${result.receiverId}`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            ).then((recResult) => recResult.json())
+
             const weight = result.pickups.reduce(function (a: any, b: any) {
               return a + b.weight
             }, 0)
             return {
-              mottagare: 'test',
+              mottagare: receiver.name,
               datum: result.startTime,
               vikt: weight,
               status: result.endTime ? 'levererad' : 'pågående',
+              driveId: result.id,
             }
           })
-
-          setDriveData(results)
+          Promise.all(results).then((promise) => {
+            setLoading(false)
+            setDriveData(promise)
+          })
         })
     }
 
     timeFrameCallback(selectedTimeFrame)
   }, [apiEndpoint, selectedTimeFrame])
 
-  const totalPeriodWeight = driveData.reduce(function (a: any, b: any) {
-    return a + b.vikt
-  }, 0)
+  const totalPeriodWeight = Math.round(
+    driveData.reduce(function (a: any, b: any) {
+      return a + b.vikt
+    }, 0)
+  )
 
   return (
     <>
+      {loading ? <Loading /> : null}
       <Flex justifyContent="between">
         <div className="w-20 h-20 relative">
           <Image src="/Allwin_Logo_round_03.png" alt="logo" fill />
@@ -126,7 +154,7 @@ const Dashboard = ({ apiEndpoint }: Props) => {
                 <Flex alignItems="start">
                   <div>
                     <Text>Total antal matkassar</Text>
-                    <Metric>{totalPeriodWeight / 5} st</Metric>
+                    <Metric>{Math.round(totalPeriodWeight / 5)} st</Metric>
                   </div>
                 </Flex>
               </Card>
@@ -135,7 +163,7 @@ const Dashboard = ({ apiEndpoint }: Props) => {
                   <div>
                     <Text>Totalt utsläpp (CO2)</Text>
                     <Metric>
-                      {totalPeriodWeight * 2} CO<sub>2</sub>
+                      {Math.round(totalPeriodWeight * 2)} CO<sub>2</sub>
                     </Metric>
                   </div>
                 </Flex>
@@ -185,13 +213,25 @@ const Dashboard = ({ apiEndpoint }: Props) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {driveData.map((item, index) => (
-                      <TableRow key={index}>
+                    {driveDataReversed.map((item, index) => (
+                      <TableRow
+                        key={index}
+                        onClick={() =>
+                          (window.location.href = `/leverans/${item.driveId}`)
+                        }
+                        className="hover:cursor-pointer"
+                      >
                         <TableCell>{item.mottagare}</TableCell>
                         <TableCell>{item.datum}</TableCell>
                         <TableCell>{item.vikt}kg</TableCell>
                         <TableCell className="max-w-fit">
-                          <Badge color="emerald">{item.status}</Badge>
+                          <Badge
+                            color={
+                              item.status === 'levererad' ? 'blue' : 'green'
+                            }
+                          >
+                            {item.status}
+                          </Badge>
                         </TableCell>
                       </TableRow>
                     ))}

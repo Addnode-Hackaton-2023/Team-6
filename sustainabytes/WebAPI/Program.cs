@@ -33,6 +33,7 @@ builder.Services.AddDbContext<SustainaBytesDb>(opt => opt.UseSqlServer("Server=t
 builder.Services.AddScoped<GiversRepository>();
 builder.Services.AddScoped<ReceiversRepository>();
 builder.Services.AddScoped<DrivesRepository>();
+builder.Services.AddScoped<StatisticsRepository>();
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();

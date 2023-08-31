@@ -32,6 +32,15 @@ export default function MainExample() {
       })
   }
 
+  function numberWithSpaces(x: any) {
+    if (x !== undefined) {
+      x = x.toString()
+      var pattern = /(-?\d+)(\d{3})/
+      while (pattern.test(x)) x = x.replace(pattern, '$1 $2')
+      return x
+    }
+  }
+
   return (
     <div>
       <div
@@ -89,7 +98,7 @@ export default function MainExample() {
                   Total vikt räddad mat
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                  {data.weight} kg
+                  {numberWithSpaces(data.weight)} kg
                   <LocalPizzaIcon className="absolute" />
                 </dd>
               </div>
@@ -98,7 +107,7 @@ export default function MainExample() {
                   Antal utdelade matkassar
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                  {data.foodBags} st
+                  {numberWithSpaces(data.foodBags)} st
                   <ShoppingBagIcon className="absolute" />
                 </dd>
               </div>
@@ -107,7 +116,7 @@ export default function MainExample() {
                   Sparat utsläpp (CO<sub>2</sub>)
                 </dt>
                 <dd className="order-first text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                  {data.co2} kg
+                  {numberWithSpaces(data.co2)} kg
                   <EnergySavingsLeafIcon className="absolute" />
                 </dd>
               </div>

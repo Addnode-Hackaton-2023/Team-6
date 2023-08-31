@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet(Name = "GetReceiver")]
-        public Receiver GetReceiver(int id)
+        public Receiver? GetReceiver(int id)
         {
             return _receiverRepository.GetReceiver(id);
         }

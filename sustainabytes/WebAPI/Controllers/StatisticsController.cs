@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet(Name = "GetTotalWeight")]
-        public double GetTotalWeight()
+        public Statistics GetTotalWeight()
         {
             return _statisticsRepository.GetTotalWeight();
         }

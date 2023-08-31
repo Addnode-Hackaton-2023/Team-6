@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Flex,
   DateRangePicker,
@@ -44,10 +44,35 @@ interface Props {
   tableData: TableData[]
 }
 const Dashboard = ({ chartData, tableData }: Props) => {
-  const [value, setValue] = useState<DateRangePickerValue>({
-    from: new Date(2023, 1, 1),
-    to: new Date(),
-  })
+  const oneWeekAgo = new Date()
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+
+  const [selectedTimeFrame, setSelectedTimeFrame] =
+    useState<DateRangePickerValue>({
+      from: oneWeekAgo,
+      to: new Date(),
+    })
+
+  const timeFrameCallback = async (timeframe: DateRangePickerValue) => {
+    console.log(timeframe)
+    fetch(
+      'https://hackaddthon2023-webapi.azurewebsites.net/api/givers/getgiversbycompany/?companyid=1',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response)
+      })
+  }
+
+  useEffect(() => {
+    timeFrameCallback(selectedTimeFrame)
+  }, [selectedTimeFrame])
 
   return (
     <>
@@ -56,8 +81,8 @@ const Dashboard = ({ chartData, tableData }: Props) => {
           <Image src="/Allwin_Logo_round_03.png" alt="logo" fill />
         </div>
         <DateRangePicker
-          value={value}
-          onValueChange={setValue}
+          value={selectedTimeFrame}
+          onValueChange={setSelectedTimeFrame}
           locale={sv}
           selectPlaceholder="Välj"
           color="rose"

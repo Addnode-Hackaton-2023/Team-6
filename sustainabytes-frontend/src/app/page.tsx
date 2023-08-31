@@ -82,9 +82,9 @@ export default function MainExample() {
           <ExpandMoreIcon />
         </div>
         <div className="flex items-center justify-center">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-full px-6 lg:px-8">
             <dl className="grid grid-cols-1 gap-x-52 gap-y-16 text-center lg:grid-cols-3">
-              <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+              <div className="mx-auto flex max-w-lg flex-col gap-y-4">
                 <dt className="text-base leading-7 text-white">
                   Total vikt räddad mat
                 </dt>
@@ -93,7 +93,7 @@ export default function MainExample() {
                   <LocalPizzaIcon className="absolute" />
                 </dd>
               </div>
-              <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+              <div className="mx-auto flex max-w-lg flex-col gap-y-4">
                 <dt className="text-base leading-7 text-white">
                   Antal utdelade matkassar
                 </dt>
@@ -102,7 +102,7 @@ export default function MainExample() {
                   <ShoppingBagIcon className="absolute" />
                 </dd>
               </div>
-              <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+              <div className="mx-auto flex max-w-lg flex-col gap-y-4">
                 <dt className="text-base leading-7 text-white">
                   Sparat utsläpp (CO<sub>2</sub>)
                 </dt>

@@ -56,6 +56,14 @@ namespace WebAPI.DataStore
                 .ToList();
         }
 
+        public Drive? GetDrive(int id)
+        {
+            return _dbContext.Drives
+                .Include(x => x.Pickups)
+                .Include(x => x.Deviations)
+                .FirstOrDefault(p => p.Id == id);
+        }
+
 
         public IEnumerable<Drive> GetOngoingDriveByReceiver(int receiverId)
         {

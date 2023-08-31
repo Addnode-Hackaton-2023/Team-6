@@ -43,6 +43,12 @@ namespace WebAPI.Controllers
             return _drivesRepository.GetDrives(fromDate, toDate);
         }
 
+        [HttpGet(Name = "GetDrive")]
+        public Drive? GetDrive(int id)
+        {
+            return _drivesRepository.GetDrive(id);
+        }
+
         [HttpGet(Name = "GetOngoingDriveByReceiver")]
         public IEnumerable<Drive> GetOngoingDriveByReceiver(int receiverId)
         {

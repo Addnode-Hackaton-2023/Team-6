@@ -18,7 +18,7 @@ namespace WebAPI.DataStore
             return _dbContext.Drives
                 .Include(x => x.Pickups)
                     .ThenInclude(x => x.Giver)
-                .Where(x => x.StartTime.Date >= fromDate && x.EndTime.Date >= toDate)
+                .Where(x => x.StartTime.Date >= fromDate && x.EndTime != null && x.EndTime.Value.Date <= toDate && x.Pickups.Any(p => p.GiverId == giverId))
                 .AsNoTracking()
                 .ToList();
         }
@@ -27,8 +27,8 @@ namespace WebAPI.DataStore
         {
             return _dbContext.Drives
                 .Include(x => x.Pickups)
-                .Include(x => x.Receiver)
-                .Where(x => x.StartTime.Date >= fromDate && x.EndTime.Date >= toDate)
+                //.Include(x => x.Receiver)
+                .Where(x => x.StartTime.Date >= fromDate && x.EndTime != null && x.EndTime.Value.Date <= toDate && x.ReceiverId == receiverId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -38,7 +38,7 @@ namespace WebAPI.DataStore
             return _dbContext.Drives
                 .Include(x => x.Pickups)
                     .ThenInclude(x => x.Giver)
-                .Where(x => x.StartTime.Date >= fromDate && x.EndTime.Date >= toDate)
+                .Where(x => x.StartTime.Date >= fromDate && x.EndTime != null && x.EndTime.Value.Date <= toDate && x.Pickups.Any(p => p.Giver.CompanyId == companyId))
                 .AsNoTracking()
                 .ToList();
         }
@@ -47,7 +47,17 @@ namespace WebAPI.DataStore
         {
             return _dbContext.Drives
                 .Include(x => x.Pickups)
-                .Where(x => x.StartTime.Date >= fromDate && x.EndTime.Date >= toDate)
+                .Where(x => x.StartTime.Date >= fromDate && x.EndTime != null && x.EndTime.Value.Date <= toDate)
+                .AsNoTracking()
+                .ToList();
+        }
+
+
+        public IEnumerable<Drive> GetOngoingDriveByReceiver(int receiverId)
+        {
+            return _dbContext.Drives
+                .Include(x => x.Pickups)
+                .Where(x => x.EndTime == null && x.ReceiverId == receiverId)
                 .AsNoTracking()
                 .ToList();
         }

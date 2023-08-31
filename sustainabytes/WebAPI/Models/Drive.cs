@@ -11,7 +11,7 @@ public partial class Drive
 
     public DateTime? EstimatedDeliveryTime { get; set; }
 
-    public DateTime EndTime { get; set; }
+    public DateTime? EndTime { get; set; }
 
     public int ReceiverId { get; set; }
 

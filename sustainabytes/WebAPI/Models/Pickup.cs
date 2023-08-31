@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WebAPI.Models;
 
@@ -13,7 +14,9 @@ public partial class Pickup
 
     public double Weight { get; set; }
 
+    [JsonIgnore]
     public virtual Drive Drive { get; set; } = null!;
 
+    [JsonIgnore]
     public virtual Giver Giver { get; set; } = null!;
 }

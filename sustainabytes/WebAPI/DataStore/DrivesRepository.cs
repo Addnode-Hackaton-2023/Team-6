@@ -19,6 +19,7 @@ namespace WebAPI.DataStore
                 .Include(x => x.Pickups)
                     .ThenInclude(x => x.Giver)
                 .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate && x.Pickups.Any(p => p.GiverId == giverId))
+                .OrderBy(x => x.StartTime)
                 .AsNoTracking()
                 .ToList();
         }
@@ -29,6 +30,7 @@ namespace WebAPI.DataStore
                 .Include(x => x.Pickups)
                 //.Include(x => x.Receiver)
                 .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate && x.ReceiverId == receiverId)
+                .OrderBy(x => x.StartTime)
                 .AsNoTracking()
                 .ToList();
         }
@@ -39,6 +41,7 @@ namespace WebAPI.DataStore
                 .Include(x => x.Pickups)
                     .ThenInclude(x => x.Giver)
                 .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate && x.Pickups.Any(p => p.Giver.CompanyId == companyId))
+                .OrderBy(x => x.StartTime)
                 .AsNoTracking()
                 .ToList();
         }
@@ -48,6 +51,7 @@ namespace WebAPI.DataStore
             return _dbContext.Drives
                 .Include(x => x.Pickups)
                 .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate)
+                .OrderBy(x => x.StartTime)
                 .AsNoTracking()
                 .ToList();
         }

@@ -37,9 +37,8 @@ namespace WebAPI.DataStore
         public IEnumerable<Drive> GetDrivesByCompany(int companyId, DateTime fromDate, DateTime toDate)
         {
             return _dbContext.Drives
-                .Include(x => x.Pickups)
-                    .ThenInclude(x => x.Giver)
-                .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate && x.Pickups.Any(p => p.Giver.CompanyId == companyId))
+                .Include(x => x.Pickups.Where(p => p.Giver.CompanyId == companyId))
+                .Where(x => x.StartTime.Date >= fromDate && x.StartTime.Date <= toDate)
                 .OrderBy(x => x.StartTime)
                 .AsNoTracking()
                 .ToList();

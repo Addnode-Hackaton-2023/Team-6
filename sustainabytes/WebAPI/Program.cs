@@ -15,7 +15,8 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("http://localhost",
                                               "http://193.15.92.195",
                                               "https://localhost",
-                                              "https://193.15.92.195");
+                                              "https://193.15.92.195",
+                                              "193.15.92.195");
                       });
 });
 
@@ -43,7 +44,10 @@ var app = builder.Build();
     app.UseSwaggerUI();
 //}
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(builder => builder
+     .AllowAnyOrigin()
+     .AllowAnyMethod()
+     .AllowAnyHeader());
 
 app.UseHttpsRedirection();
 

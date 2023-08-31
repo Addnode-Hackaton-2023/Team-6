@@ -6,7 +6,7 @@ namespace WebAPI.DataStore
 {
     public class Statistics
     {
-        public double Weight { get; set; }
+        public int Weight { get; set; }
         public int FoodBags { get; set; }
         public int Price { get; set; }
 
@@ -27,7 +27,7 @@ namespace WebAPI.DataStore
             double weight = _dbContext.Pickups.Sum(p => p.Weight);
             return new Statistics()
             {
-                Weight = weight,
+                Weight = (int)Math.Round(weight),
                 FoodBags = (int)Math.Round(weight / 5),
                 Price = (int)Math.Round(weight * 50),
                 Co2 = (int)Math.Round(weight * 2),

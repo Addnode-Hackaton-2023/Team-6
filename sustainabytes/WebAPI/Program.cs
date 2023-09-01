@@ -13,10 +13,7 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("http://localhost",
-                                              "http://193.15.92.195",
-                                              "https://localhost",
-                                              "https://193.15.92.195",
-                                              "193.15.92.195");
+                                              "https://localhost");
                       });
 });
 

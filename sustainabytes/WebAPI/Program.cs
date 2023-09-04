@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddDbContext<SustainaBytesDb>(opt => opt.UseSqlServer("Server=tcp:add-hack.database.windows.net,1433;Initial Catalog=add-hack-6;Persist Security Info=False;User ID=addhack6;Password=Dontwastefood1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+builder.Services.AddDbContext<SustainaBytesDb>(opt => opt.UseSqlServer("Server=tcp:ooo,1433;Initial Catalog=add-hack-6;Persist Security Info=False;User ID=ooo;Password=ooo;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 builder.Services.AddScoped<GiversRepository>();
 builder.Services.AddScoped<ReceiversRepository>();
 builder.Services.AddScoped<DrivesRepository>();
